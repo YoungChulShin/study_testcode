@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SampleBank.exception;
 using SampleBank.Tests.mock;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,25 @@ namespace SampleBank.Tests
         {
             // arrange
             var mockRepository = new Mock<IAccountRepository>();
+            var sut = new AccountService(mockRepository.Object);
+
+            // act
+            sut.AddTransactionToAccount("예금 계좌", 100m);
+
+            // assert
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServiceException))]
+        public void AccountExceptionsAreWrappedInThrowServiceException()
+        {
+            // arrange
+            var accountMock = new Mock<Account>();
+            accountMock.Setup(x => x.AddTransaction(100m)).Throws<DomainException>();
+
+            var mockRepository = new Mock<IAccountRepository>();
+            mockRepository.Setup(x => x.getByName("예금 계좌")).Returns(accountMock.Object);
+
             var sut = new AccountService(mockRepository.Object);
 
             // act

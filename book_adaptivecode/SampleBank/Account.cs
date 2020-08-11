@@ -12,7 +12,7 @@ namespace SampleBank
             private set;
         }
         
-        public void AddTransaction(decimal amount)
+        public virtual void AddTransaction(decimal amount)
         {
             Balance += amount;
         }

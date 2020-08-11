@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SampleBank.exception;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,7 +24,14 @@ namespace SampleBank
             var account = repository.getByName(accountName);
             if (account != null)
             {
-                account.AddTransaction(transactionAmount);
+                try
+                {
+                    account.AddTransaction(transactionAmount);
+                }
+                catch(DomainException e)
+                {
+                    throw new ServiceException();
+                }
             }
         }
     }
