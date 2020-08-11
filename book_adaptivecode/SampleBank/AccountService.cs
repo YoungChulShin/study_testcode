@@ -8,9 +8,9 @@ namespace SampleBank
     {
         private readonly IAccountRepository repository;
 
-        public AccountService(IAccountRepository accountRepository)
+        public AccountService(IAccountRepository repository)
         {
-            repository = accountRepository;
+            this.repository = repository;
         }
 
         public void AddTransactionToAccount(string accountName, decimal transactionAmount)

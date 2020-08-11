@@ -44,5 +44,17 @@ namespace SampleBank.Tests
             // assert
             Assert.AreEqual(200m, account.Balance);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CannotCreateAccountServiceWithNullAccountRepository()
+        {
+            // arrange
+
+            // act
+            var sut = new AccountService(null);
+
+            // assert
+        }
     }
 }
