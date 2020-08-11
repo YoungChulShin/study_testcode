@@ -72,7 +72,6 @@ namespace SampleBank.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ServiceException))]
         public void AccountExceptionsAreWrappedInThrowServiceException()
         {
             // arrange
@@ -85,9 +84,15 @@ namespace SampleBank.Tests
             var sut = new AccountService(mockRepository.Object);
 
             // act
-            sut.AddTransactionToAccount("예금 계좌", 100m);
-
-            // assert
+            try
+            {
+                sut.AddTransactionToAccount("예금 계좌", 100m);
+            }
+            catch (ServiceException e)
+            {
+                // assert
+                Assert.IsInstanceOfType(e.InnerException, typeof(DomainException));
+            }
         }
     }
 }

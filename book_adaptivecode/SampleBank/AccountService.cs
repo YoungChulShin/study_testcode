@@ -30,7 +30,7 @@ namespace SampleBank
                 }
                 catch(DomainException e)
                 {
-                    throw new ServiceException();
+                    throw new ServiceException("도메인 모델에서 예외가 발생했습니다", e);
                 }
             }
         }
