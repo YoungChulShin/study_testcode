@@ -14,7 +14,7 @@ namespace SampleBank
         
         public void AddTransaction(decimal amount)
         {
-            Balance = amount;
+            Balance += amount;
         }
     }
 }
