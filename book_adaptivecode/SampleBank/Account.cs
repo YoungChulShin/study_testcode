@@ -11,15 +11,10 @@ namespace SampleBank
             get;
             private set;
         }
-
-        public Account()
-        {
-            Balance = 200m;
-        }
-
+        
         public void AddTransaction(decimal amount)
         {
-
+            Balance = amount;
         }
     }
 }
