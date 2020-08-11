@@ -1,16 +1,25 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SampleBank.exception;
-using SampleBank.Tests.mock;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SampleBank.Tests
 {
     [TestClass]
     public class AccountServiceTest
     {
+        private Mock<Account> mockAccount;
+        private Mock<IAccountRepository> mockRepository;
+        private AccountService sut;
+
+        [TestInitialize]
+        public void setup()
+        {
+            mockAccount = new Mock<Account>();
+            mockRepository = new Mock<IAccountRepository>();
+            sut = new AccountService(mockRepository.Object);
+        }
+
         /*
          * 직접 구현한 Mock 적용
          * 
@@ -35,9 +44,7 @@ namespace SampleBank.Tests
         {
             // arrange
             var account = new Account();
-            var mockRepository = new Mock<IAccountRepository>();
             mockRepository.Setup(x => x.getByName("예금계좌")).Returns(account);
-            var sut = new AccountService(mockRepository.Object);
 
             // act
             sut.AddTransactionToAccount("예금계좌", 200m);
@@ -62,8 +69,6 @@ namespace SampleBank.Tests
         public void DoNotThrowWhenAccountIsNotFound()
         {
             // arrange
-            var mockRepository = new Mock<IAccountRepository>();
-            var sut = new AccountService(mockRepository.Object);
 
             // act
             sut.AddTransactionToAccount("예금 계좌", 100m);
@@ -75,13 +80,8 @@ namespace SampleBank.Tests
         public void AccountExceptionsAreWrappedInThrowServiceException()
         {
             // arrange
-            var accountMock = new Mock<Account>();
-            accountMock.Setup(x => x.AddTransaction(100m)).Throws<DomainException>();
-
-            var mockRepository = new Mock<IAccountRepository>();
-            mockRepository.Setup(x => x.getByName("예금 계좌")).Returns(accountMock.Object);
-
-            var sut = new AccountService(mockRepository.Object);
+            mockAccount.Setup(x => x.AddTransaction(100m)).Throws<DomainException>();
+            mockRepository.Setup(x => x.getByName("예금 계좌")).Returns(mockAccount.Object);
 
             // act
             try
