@@ -56,5 +56,18 @@ namespace SampleBank.Tests
 
             // assert
         }
+
+        [TestMethod]
+        public void DoNotThrowWhenAccountIsNotFound()
+        {
+            // arrange
+            var mockRepository = new Mock<IAccountRepository>();
+            var sut = new AccountService(mockRepository.Object);
+
+            // act
+            sut.AddTransactionToAccount("예금 계좌", 100m);
+
+            // assert
+        }
     }
 }
