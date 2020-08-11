@@ -32,5 +32,32 @@ namespace SampleBank.Tests
             // assert
             Assert.AreEqual(0m, account.Balance);
         }
+
+        [TestMethod]
+        public void Adding100TransactionChangesBalance()
+        {
+            // arrange
+            var account = new Account();
+
+            // act
+            account.AddTransaction(100m);
+
+            // assert
+            Assert.AreEqual(100m, account.Balance);
+        }
+
+        [TestMethod]
+        public void AddingTransactionsCreatesSummationBalance()
+        {
+            // arrange
+            var account = new Account();
+            account.AddTransaction(50m);
+
+            // act
+            account.AddTransaction(30m);
+
+            // assert
+            Assert.AreEqual(80m, account.Balance);
+        }
     }
 }
