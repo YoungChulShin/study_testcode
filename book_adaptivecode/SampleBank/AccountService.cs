@@ -21,7 +21,10 @@ namespace SampleBank
         public void AddTransactionToAccount(string accountName, decimal transactionAmount)
         {
             var account = repository.getByName(accountName);
-            account.AddTransaction(transactionAmount);
+            if (account != null)
+            {
+                account.AddTransaction(transactionAmount);
+            }
         }
     }
 }
