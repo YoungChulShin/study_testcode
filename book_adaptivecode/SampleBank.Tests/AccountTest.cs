@@ -11,14 +11,26 @@ namespace SampleBank.Tests
         [TestMethod]
         public void AddingTransactionChangesBalance()
         {
-            // given
+            // arrange
             var account = new Account();
 
-            // when
+            // act
             account.AddTransaction(200m);
 
-            // then
+            // assert
             Assert.AreEqual(200m, account.Balance);
+        }
+
+        [TestMethod]
+        public void AccountHaveAnOpeningBalanceOfZero()
+        {
+            // arrange
+
+            // act
+            var account = new Account();
+
+            // assert
+            Assert.AreEqual(0m, account.Balance);
         }
     }
 }
