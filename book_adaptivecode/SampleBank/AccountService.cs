@@ -10,6 +10,11 @@ namespace SampleBank
 
         public AccountService(IAccountRepository repository)
         {
+            if (repository == null)
+            {
+                throw new ArgumentNullException("repository", "유효한 저장소 객체를 제공해야 합니다");
+            }
+
             this.repository = repository;
         }
 
