@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SampleBank.Tests.mock;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,13 +13,15 @@ namespace SampleBank.Tests
         public void AddingTransactionToAccountDelegatesToAccountInstance()
         {
             // arrange
-            var sut = new AccountService();
+            var account = new Account();
+            var fakeRepository = new FakeAccountRepository(account);
+            var sut = new AccountService(fakeRepository);
 
             // act
-            sut.AddingTransactionToAccount("예금계좌", 200m);
+            sut.AddTransactionToAccount("예금계좌", 200m);
 
             // assert
-            Assert.Fail();
+            Assert.AreEqual(200m, account.Balance);
         }
     }
 }
